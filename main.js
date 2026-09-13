@@ -127,13 +127,13 @@
           const d = Math.hypot(a.x - b.x, a.y - b.y);
           if (d < LINK) {
             const o = (1 - d / LINK) * 0.22;
-            ctx.strokeStyle = (a.hot || b.hot) ? `rgba(217,145,90,${o})` : `rgba(237,234,227,${o * 0.6})`;
+            ctx.strokeStyle = (a.hot || b.hot) ? `rgba(139,108,255,${o*1.2})` : `rgba(243,241,250,${o * 0.5})`;
             ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
           }
         }
       }
       for (const p of pts) {
-        ctx.fillStyle = p.hot ? 'rgba(240,178,126,.9)' : 'rgba(237,234,227,.55)';
+        ctx.fillStyle = p.hot ? 'rgba(185,166,255,.95)' : 'rgba(243,241,250,.5)';
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
       }
       if (!reduce) requestAnimationFrame(draw);
@@ -168,6 +168,10 @@
       $$('[data-reveal]', group).forEach((el, i) => { el.style.transitionDelay = (i * 90) + 'ms'; });
     });
   } else revealEls.forEach((el) => el.classList.add('is-in'));
+
+  /* ---------- nav on scroll ---------- */
+  const nav = $('header.nav');
+  if (nav) { const t = () => nav.classList.toggle('scrolled', scrollY > 40); addEventListener('scroll', t, { passive: true }); t(); }
 
   /* ---------- progress bar ---------- */
   const prog = $('#progress');
