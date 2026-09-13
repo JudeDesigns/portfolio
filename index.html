@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Jude Oba — websites, web apps and automations, built as one system</title>
+<meta name="description" content="Jude Oba is an independent software engineer who designs, builds and keeps alive the websites, web apps and automations small businesses run on. Remote, UTC+1.">
+<meta name="theme-color" content="#0E1116">
+<meta property="og:title" content="Jude Oba — I build the systems businesses run on">
+<meta property="og:description" content="Websites, web apps and automations — designed, built and kept alive by one engineer.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://judedesigns.github.io/">
+<meta property="og:image" content="https://judedesigns.github.io/assets/og.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.replace('no-js','js')</script>
+</head>
+<body>
+
+<div class="intro" id="intro" aria-hidden="true"><span>Jude Oba</span></div>
+<div class="glow" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><i id="progress"></i></div>
+
+<header class="nav">
+  <a class="brand" href="#top">Jude<span>.</span></a>
+  <ul>
+    <li><a href="#estate">Estate</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="status" href="#contact"><i></i>Available</a>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="kicker" data-reveal>
+      <span class="mono">Jude Oba</span>
+      <span class="mono">·</span>
+      <span class="mono">Independent software engineer</span>
+      <span class="mono">·</span>
+      <span class="mono">Lagos → everywhere</span>
+    </div>
+    <h1 id="h1">
+      <span class="line" data-reveal-line><span>I build the</span></span>
+      <span class="line" data-reveal-line><span><em class="rot" id="rot"><span class="on">websites</span><span>web apps</span><span>automations</span><span>whole system</span></em></span></span>
+      <span class="line" data-reveal-line><span>your business runs on.</span></span>
+    </h1>
+    <div class="sub">
+      <p class="lede" data-reveal>Most freelancers hand you a page and leave. I design the site, build the app behind it, wire the workflows that eat your week — and keep all of it running. One engineer, the whole system.</p>
+      <div class="cta" data-reveal>
+        <a class="btn primary" href="#contact">Start a project <span class="arr">→</span></a>
+        <a class="btn" href="#work">See the work</a>
+      </div>
+    </div>
+  </div>
+  <div class="scroll"><span>Scroll</span><i></i></div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="track" id="marquee">
+    <span>Next.js</span><span>TypeScript</span><span>FastAPI</span><span>Django</span><span>PostgreSQL</span><span>React</span><span>Go</span><span>n8n</span><span>Make</span><span>Prisma</span><span>Docker</span><span>GitHub Actions</span><span>Keycloak</span><span>Claude API</span><span>OCR pipelines</span><span>GSAP</span><span>Tailwind</span><span>Celery</span><span>Redis</span><span>C# / .NET</span>
+  </div>
+</div>
+
+<!-- ============ ESTATE (scrollytelling) ============ -->
+<section class="chapter estate" id="estate">
+  <div class="wrap">
+    <div class="chapter-head">
+      <div>
+        <p class="eyebrow" data-reveal>01 — A working example</p>
+        <h2 data-reveal>One food distributor.<br>Six apps in production.<br><em>One engineer.</em></h2>
+      </div>
+      <p class="lede" data-reveal>B&amp;R Food Services delivers to restaurants across Los Angeles every day. Since 2025 I've been the only engineer behind everything their office, drivers and admins use. Scroll through the estate.</p>
+    </div>
+
+    <div class="stage">
+      <div class="sticky">
+        <svg class="diagram" id="diagram" viewBox="0 0 640 640" role="img" aria-labelledby="dgt">
+          <title id="dgt">Diagram of the six B&amp;R applications connected to a shared platform layer</title>
+          <defs>
+            <radialGradient id="hubg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#D9915A" stop-opacity=".35"/><stop offset="1" stop-color="#D9915A" stop-opacity="0"/></radialGradient>
+          </defs>
+          <circle class="ring" id="ring" cx="320" cy="320" r="292"/>
+          <circle cx="320" cy="320" r="120" fill="url(#hubg)"/>
+
+          <!-- links hub -> apps -->
+          <path class="link" data-app="driver"  d="M320 320 L320 112"/>
+          <path class="link" data-app="worksync" d="M320 320 L500 216"/>
+          <path class="link" data-app="night"   d="M320 320 L500 424"/>
+          <path class="link" data-app="endday"  d="M320 320 L320 528"/>
+          <path class="link" data-app="vendor"  d="M320 320 L140 424"/>
+          <path class="link" data-app="extract" d="M320 320 L140 216"/>
+          <!-- links between apps that talk to each other -->
+          <path class="link" data-app="endday" d="M140 424 Q230 560 320 528" />
+          <path class="link" data-app="vendor" d="M140 216 Q80 320 140 424" />
+
+          <!-- hub -->
+          <g class="node hub on" id="hub">
+            <circle class="bg" cx="320" cy="320" r="58"/>
+            <text x="320" y="314" text-anchor="middle">B&amp;R Food</text>
+            <text x="320" y="330" text-anchor="middle">Services</text>
+            <text class="sub" x="320" y="346" text-anchor="middle">Los Angeles</text>
+          </g>
+
+          <!-- app nodes -->
+          <g class="node" data-app="driver"><rect x="244" y="82" width="152" height="60" rx="12"/><text x="320" y="108" text-anchor="middle">Driver &amp; Admin</text><text class="sub" x="320" y="126" text-anchor="middle">Next.js 15 · Prisma · Socket.IO</text></g>
+          <g class="node" data-app="worksync"><rect x="424" y="186" width="152" height="60" rx="12"/><text x="500" y="212" text-anchor="middle">WorkSync</text><text class="sub" x="500" y="230" text-anchor="middle">Django REST · React</text></g>
+          <g class="node" data-app="night"><rect x="424" y="394" width="152" height="60" rx="12"/><text x="500" y="420" text-anchor="middle">Nightshift</text><text class="sub" x="500" y="438" text-anchor="middle">FastAPI · Vite</text></g>
+          <g class="node" data-app="endday"><rect x="244" y="498" width="152" height="60" rx="12"/><text x="320" y="524" text-anchor="middle">Route Report</text><text class="sub" x="320" y="542" text-anchor="middle">FastAPI · Claude vision</text></g>
+          <g class="node" data-app="vendor"><rect x="64" y="394" width="152" height="60" rx="12"/><text x="140" y="420" text-anchor="middle">Vendor Pricing</text><text class="sub" x="140" y="438" text-anchor="middle">FastAPI · OCR · LLM</text></g>
+          <g class="node" data-app="extract"><rect x="64" y="186" width="152" height="60" rx="12"/><text x="140" y="212" text-anchor="middle">PDF Extractor</text><text class="sub" x="140" y="230" text-anchor="middle">Flask · Tesseract</text></g>
+
+          <!-- platform ring nodes -->
+          <g class="platform" id="platform">
+            <g><circle cx="320" cy="28" r="22"/><text x="320" y="32" text-anchor="middle">SSO</text></g>
+            <g><circle cx="612" cy="320" r="22"/><text x="612" y="324" text-anchor="middle">CI</text></g>
+            <g><circle cx="320" cy="612" r="22"/><text x="320" y="616" text-anchor="middle">Sentry</text></g>
+            <g><circle cx="28" cy="320" r="22"/><text x="28" y="324" text-anchor="middle">Vault</text></g>
+          </g>
+        </svg>
+      </div>
+
+      <div class="steps" id="steps">
+        <article class="step" data-app="driver">
+          <p class="n">Step 1 · The platform</p>
+          <h3>Drivers stopped carrying paper.</h3>
+          <p>A role-based admin console and a driver portal: routes, deliveries, digitized data capture, real-time updates over Socket.IO, and payment capture with a QuickBooks audit trail. 199 commits, used every working day.</p>
+          <div class="tags"><span class="tag">Next.js 15</span><span class="tag">TypeScript</span><span class="tag">Prisma</span><span class="tag">PostgreSQL</span><span class="tag">JWT + Argon2</span></div>
+        </article>
+        <article class="step" data-app="worksync">
+          <p class="n">Step 2 · The people</p>
+          <h3>Clock-ins that know where you are.</h3>
+          <p>WorkSync handles attendance, breaks, leave and shift scheduling for the whole team, with location-verified clock-ins and break-compliance rules. I also fixed the overlap validation that had been quietly letting conflicting shifts through.</p>
+          <div class="tags"><span class="tag">Django REST</span><span class="tag">React 18</span><span class="tag">Celery</span><span class="tag">Redis</span></div>
+        </article>
+        <article class="step" data-app="night">
+          <p class="n">Step 3 · The night</p>
+          <h3>The night-shift report writes itself.</h3>
+          <p>Nightshift turns the evening's paperwork into a clean report the morning team can act on, behind proper authentication after the server was rebuilt clean. Small app, big habit change.</p>
+          <div class="tags"><span class="tag">FastAPI</span><span class="tag">Vite</span><span class="tag">nginx</span><span class="tag">systemd</span></div>
+        </article>
+        <article class="step" data-app="endday">
+          <p class="n">Step 4 · The reconciliation</p>
+          <h3>A scanned PDF in, a 12-tab workbook out.</h3>
+          <p>The daily route report reads a scanned route PDF with vision models and produces a fully reconciled Excel workbook — twelve tabs, every delivery and dollar accounted for — instead of an afternoon of retyping.</p>
+          <div class="tags"><span class="tag">FastAPI</span><span class="tag">Claude vision</span><span class="tag">openpyxl</span><span class="tag">React + Vite</span></div>
+        </article>
+        <article class="step" data-app="vendor">
+          <p class="n">Step 5 · The suppliers</p>
+          <h3>Weekly price updates, no human in the loop.</h3>
+          <p>Suppliers email price lists in every format imaginable. The pipeline reads forwarded threads, attachments and headerless forwards, works out which vendor each belongs to, and reconciles the deltas into inventory workbooks. 92 test files built from real malformed inputs.</p>
+          <div class="tags"><span class="tag">FastAPI</span><span class="tag">OCR</span><span class="tag">Claude + Gemini</span><span class="tag">Email ingestion</span></div>
+        </article>
+        <article class="step" data-app="extract">
+          <p class="n">Step 6 · The documents</p>
+          <h3>Thirty PDFs at once, text or scanned.</h3>
+          <p>A Flask service that pulls product IDs, descriptions and costs out of vendor price lists — even image-only tables — re-architected as a streaming page-by-page pipeline so big multi-vendor documents stop blowing up memory.</p>
+          <div class="tags"><span class="tag">Flask</span><span class="tag">Tesseract</span><span class="tag">Poppler</span><span class="tag">Streaming</span></div>
+        </article>
+        <article class="step" data-app="platform">
+          <p class="n">Underneath · The platform</p>
+          <h3>Then I made it boring to run.</h3>
+          <p>One identity realm (Keycloak SSO) instead of six logins, secrets in Infisical instead of hand-carried .env files, GitHub Actions gating every deploy, Sentry-style error tracking on server and browser, and 200+ test files across the estate. That's what "kept alive" means.</p>
+          <div class="tags"><span class="tag">Keycloak</span><span class="tag">Infisical</span><span class="tag">GitHub Actions</span><span class="tag">Sentry</span><span class="tag">AlmaLinux</span></div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORK ============ -->
+<section class="chapter work" id="work">
+  <div class="wrap">
+    <div class="chapter-head">
+      <div>
+        <p class="eyebrow" data-reveal>02 — Selected work</p>
+        <h2 data-reveal>Products, tools,<br><em>and the odd library.</em></h2>
+      </div>
+      <p class="lede" data-reveal>A few of the things I've built solo or as the lead engineer. Some are private client systems, so where I can't show the code I show the shape.</p>
+    </div>
+  </div>
+  <div class="pin" id="workPin">
+    <div class="hint mono"><span>Drag or scroll</span><span class="bar"><i id="railbar"></i></span><span id="railcount">01 / 06</span></div>
+    <div class="rail" id="rail">
+
+      <article class="card">
+        <div class="idx"><b>01</b><span>Client platform · 2025 →</span></div>
+        <h3>B&amp;R Driver &amp; Admin Platform</h3>
+        <div class="frame">
+          <div class="ui">
+            <div class="side"><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="main">
+              <div class="kpis"><b></b><b></b><b></b></div>
+              <div class="chart"><svg viewBox="0 0 300 100" preserveAspectRatio="none"><defs><linearGradient id="cg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#D9915A" stop-opacity=".35"/><stop offset="1" stop-color="#D9915A" stop-opacity="0"/></linearGradient></defs><path class="area" d="M0 80 C40 70 60 40 100 44 S160 70 200 50 S260 20 300 28 L300 100 L0 100Z"/><path d="M0 80 C40 70 60 40 100 44 S160 70 200 50 S260 20 300 28"/></svg></div>
+            </div>
+          </div>
+        </div>
+        <p class="desc">Routes, deliveries, live driver updates and financial reconciliation for a Los Angeles food distributor. Argon2 auth, audited privileged writes, CSV/JSON exports, a 30-day supervised trash with restore.</p>
+        <div class="foot"><div class="tags"><span class="tag">Next.js 15</span><span class="tag">Prisma</span><span class="tag">Socket.IO</span></div><a href="#contact">Private — ask for a walkthrough →</a></div>
+      </article>
+
+      <article class="card">
+        <div class="idx"><b>02</b><span>Product · multi-tenant</span></div>
+        <h3>Receipt-based rewards for restaurants</h3>
+        <div class="frame f-mobile"><div class="ui"><div class="phone"><i style="width:40%"></i><i class="hero"></i><i></i><i style="width:70%"></i><i style="width:55%"></i><i class="btn"></i></div></div></div>
+        <p class="desc">Customers scan a receipt, spin for a reward, redeem at the counter. Restaurant admins and a super-admin see it all. Five layers of fraud prevention — image hashing, OCR receipt numbers, QR signing — because free food attracts creativity.</p>
+        <div class="foot"><div class="tags"><span class="tag">Next.js</span><span class="tag">Prisma</span><span class="tag">OCR</span><span class="tag">Multi-tenant</span></div><a href="#contact">Ask about it →</a></div>
+      </article>
+
+      <article class="card">
+        <div class="idx"><b>03</b><span>Automation platform</span></div>
+        <h3>Apex Engine — AI video at channel scale</h3>
+        <div class="frame f-pipe"><div class="ui"><div class="pipe"><b class="on" data-l="Script"></b><b class="on" data-l="Voice"></b><b class="on" data-l="Render"></b><b data-l="Review"></b><b data-l="Publish"></b></div></div></div>
+        <p class="desc">Generates, reviews and publishes AI-made video across up to ten YouTube channels, with content-uniqueness checks and a human-in-the-loop approval step before anything goes live. Celery workers, FFmpeg, four AI providers behind one interface.</p>
+        <div class="foot"><div class="tags"><span class="tag">FastAPI</span><span class="tag">Celery + Redis</span><span class="tag">FFmpeg</span><span class="tag">Docker</span></div><a href="#contact">Ask about it →</a></div>
+      </article>
+
+      <article class="card">
+        <div class="idx"><b>04</b><span>Open source · PyPI</span></div>
+        <h3>itemwise</h3>
+        <div class="frame f-term"><div class="ui"><pre>$ <b>itemwise</b> analyze results.json
+
+  items                40
+  models compared      12
+  Cronbach's alpha     <s>0.860</s>  (good)
+  carrying signal      48%
+  dead weight          <u>52%</u> of every run
+
+<u>BACKWARDS ITEMS (3)</u> — fix these first
+  format-00   r_pb=-0.41   weaker models pass more often
+  ...</pre></div></div>
+        <p class="desc">Applies classical test theory — the maths behind certification exams — to LLM eval suites and tells you which cases carry signal and which just cost money. Finds broken graders before they ship as "results". Zero dependencies.</p>
+        <div class="foot"><div class="tags"><span class="tag">Python</span><span class="tag">Statistics</span><span class="tag">CLI</span></div><a href="https://github.com/JudeDesigns/itemwise" target="_blank" rel="noopener">GitHub ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="idx"><b>05</b><span>Client platform</span></div>
+        <h3>WorkSync — workforce management</h3>
+        <div class="frame">
+          <div class="ui">
+            <div class="side"><i></i><i></i><i></i><i></i></div>
+            <div class="main">
+              <div class="kpis"><b></b><b></b><b></b></div>
+              <div class="chart"><svg viewBox="0 0 300 100" preserveAspectRatio="none"><path class="area" d="M0 60 L30 62 L60 40 L90 48 L120 30 L150 36 L180 22 L210 30 L240 18 L270 26 L300 12 L300 100 L0 100Z"/><path d="M0 60 L30 62 L60 40 L90 48 L120 30 L150 36 L180 22 L210 30 L240 18 L270 26 L300 12"/></svg></div>
+            </div>
+          </div>
+        </div>
+        <p class="desc">Time tracking with location verification, break compliance, leave approvals, shift scheduling, overtime reporting and real-time notifications. 121 commits; deployed with its own nginx and systemd scripts.</p>
+        <div class="foot"><div class="tags"><span class="tag">Django REST</span><span class="tag">React 18</span><span class="tag">Celery</span></div><a href="#contact">Ask about it →</a></div>
+      </article>
+
+      <article class="card">
+        <div class="idx"><b>06</b><span>Agency site · design system</span></div>
+        <h3>CreonTek — a site that moves like a deck</h3>
+        <div class="frame"><div class="ui" style="grid-template-columns:1fr;place-items:center"><div style="width:70%;font-family:var(--serif);font-size:clamp(22px,3vw,34px);color:var(--ink);text-align:center;line-height:1.1">Websites. Apps. Automations.<br><span style="color:var(--copper-2);font-style:italic">Built as one system.</span></div></div></div>
+        <p class="desc">A Turborepo monorepo for an agency and its three studio sub-sites, sharing one design-system package so a rebrand is a one-file change. On desktop the homepage is an input-driven state deck — every transition identical, everything honouring reduced motion.</p>
+        <div class="foot"><div class="tags"><span class="tag">Next.js</span><span class="tag">GSAP</span><span class="tag">Turborepo</span><span class="tag">Tailwind v4</span></div><a href="#contact">Ask about it →</a></div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="chapter process" id="process">
+  <div class="wrap">
+    <div class="chapter-head">
+      <div>
+        <p class="eyebrow" data-reveal>03 — How a project runs</p>
+        <h2 data-reveal>No surprises.<br><em>That's the whole process.</em></h2>
+      </div>
+      <p class="lede" data-reveal>Fixed price where the scope is clear, a short paid discovery where it isn't. You see a mock-up before I build, a staging site before it goes live, and documentation when it's done.</p>
+    </div>
+    <ol>
+      <li data-step><div class="num">1</div><h3>Discover</h3><p>A call, then a one-page brief with a fixed price and timeline. If I think you don't need what you asked for, I'll say so.</p></li>
+      <li data-step><div class="num">2</div><h3>Design</h3><p>A mock-up of the real thing — homepage, dashboard, workflow — before any code. You react to pictures, not promises.</p></li>
+      <li data-step><div class="num">3</div><h3>Build</h3><p>Staging first, before/after on every change, tests on anything that touches money or data. Nothing goes live until you've clicked through it.</p></li>
+      <li data-step><div class="num">4</div><h3>Keep it alive</h3><p>Deploys, monitoring, backups, docs. A retainer if you want one, a clean hand-off if you don't. Either way it keeps working after I leave.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ NUMBERS ============ -->
+<section class="numbers" id="numbers">
+  <div class="wrap">
+    <div class="grid">
+      <div class="stat" data-reveal><div class="v"><span data-count="6">0</span></div><div class="l">Apps in production, one client</div></div>
+      <div class="stat" data-reveal><div class="v"><span data-count="200">0</span><sup>+</sup></div><div class="l">Test files across the estate</div></div>
+      <div class="stat" data-reveal><div class="v"><span data-count="6">0</span><sup>yrs</sup></div><div class="l">Shipping for clients since 2019</div></div>
+      <div class="stat" data-reveal><div class="v"><span data-count="199">0</span></div><div class="l">Commits on one platform alone</div></div>
+      <div class="stat" data-reveal><div class="v"><span data-count="48">0</span><sup>h</sup></div><div class="l">From yes to first commit</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="chapter about" id="about">
+  <div class="wrap">
+    <div class="grid">
+      <div class="photo" data-reveal>
+        <!-- Drop your photo at assets/jude.jpg and remove the placeholder div below -->
+        <div class="ph"><b>J.</b><span>Photo coming — assets/jude.jpg</span></div>
+      </div>
+      <div>
+        <p class="eyebrow" data-reveal>04 — About</p>
+        <h2 data-reveal>Hi, I'm Jude.</h2>
+        <div class="bio" style="margin-top:22px">
+          <p data-reveal>I'm a software engineer in Lagos who has spent the last six years building things for businesses in the US, the UK and at home — first as a contractor across Python, Go, TypeScript and C#, then as the one person responsible for a whole company's software.</p>
+          <p data-reveal>That last part shaped how I work. When you're the only engineer, you can't hand a problem to "the backend team". You learn to design the screen, build the API, tune the query, write the deploy script and answer the 7am message when something breaks. I like that. It's also why my clients tend to stay.</p>
+          <p data-reveal>I also wrote <a href="https://github.com/JudeDesigns/itemwise" style="color:var(--copper-2);border-bottom:1px solid currentColor">itemwise</a>, a small open-source library, and teach Python to a private cohort on the side, which keeps me honest about explaining things clearly.</p>
+        </div>
+        <dl class="facts" data-reveal>
+          <div><dt>Based</dt><dd>Lagos, UTC+1 — overlaps US and UK hours</dd></div>
+          <div><dt>Since</dt><dd>2019, independent</dd></div>
+          <div><dt>Stack</dt><dd>Python, TypeScript, Go, C#</dd></div>
+          <div><dt>Engagements</dt><dd>Fixed-price projects and retainers</dd></div>
+          <div><dt>Education</dt><dd>B.Sc. Computer Science, University of Ilorin</dd></div>
+          <div><dt>Currently</dt><dd>Taking on new projects</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="bgword" aria-hidden="true">Jude</div>
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>05 — Say hello</p>
+    <h2 class="serif" data-reveal>Let's build<br>the <em>thing.</em></h2>
+    <a class="big" href="mailto:judeoba111@gmail.com?subject=Project%20enquiry" data-reveal>judeoba111@gmail.com</a>
+    <div class="row" data-reveal>
+      <a class="btn primary" href="mailto:judeoba111@gmail.com?subject=Project%20enquiry">Email me <span class="arr">→</span></a>
+      <button class="btn" id="copy" type="button">Copy address</button>
+      <a class="btn" href="https://github.com/JudeDesigns" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+    <p class="note" data-reveal>Tell me what you're trying to get done — a site that needs to exist, an app that needs to ship, a workflow that eats your week. I reply within a day, usually faster.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <span>© <span id="year">2026</span> Jude Oba</span>
+  <span>Designed and built by hand. No template.</span>
+  <a href="#top">Back to top ↑</a>
+</footer>
+
+<div class="toast" id="toast">Copied</div>
+
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/lenis.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
