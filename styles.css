@@ -30,8 +30,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .serif{font-family:var(--serif);font-weight:400}
 .serif em,.serif i{font-style:italic;color:var(--copper-2)}
-.eyebrow{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--copper)}
-.eyebrow::before{content:"";width:28px;height:1px;background:var(--copper)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--copper);margin-bottom:14px}
 h1,h2,h3{margin:0;font-weight:400;text-wrap:balance;line-height:1.02;letter-spacing:-.015em}
 h2{font-family:var(--serif);font-size:clamp(40px,6.2vw,84px)}
 h3{font-family:var(--serif);font-size:clamp(28px,3.4vw,44px)}
