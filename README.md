@@ -7,4 +7,4 @@ Jude Oba's portfolio. Static site — no build step.
 - `assets/jude.jpg` — drop your photo here (4:5 works best) and replace the placeholder block in the About section
 - `assets/work/` — optional screenshots; add `<img src="assets/work/name.png" alt="">` inside any `.frame` to replace the drawn UI
 
-Deploy: push to `main` on `JudeDesigns/JudeDesigns.github.io`. GitHub Pages serves it at https://judedesigns.github.io/.
+Deploy: push to `main` on `JudeDesigns/portfolio`. GitHub Pages serves it at https://judedesigns.github.io/portfolio/.
