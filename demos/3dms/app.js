@@ -15,6 +15,24 @@ const BRAND = 0x4d7bff;
 
 /* ---------------- smooth scroll ---------------- */
 gsap.registerPlugin(ScrollTrigger);
+
+/* The story is one pinned, scrubbed timeline that is only built once the model
+   has downloaded. If the browser restores a scroll position from a previous
+   visit, that restore lands before the pin exists and the whole sequence is
+   left desynced — the canvas renders a frame that belongs to a different
+   scroll offset. Always start this page at the top. */
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+if (!location.hash) {
+  scrollTo(0, 0);
+  // Some browsers restore the offset after scripts run, so claim it again once
+  // the load event has fired. A deep link to #work is left alone.
+  addEventListener('load', () => scrollTo(0, 0), { once: true });
+}
+
+// Coming back via the back button restores the page from the bfcache with its
+// old scroll offset and stale measurements. Re-measure rather than trust them.
+addEventListener('pageshow', (e) => { if (e.persisted) ScrollTrigger.refresh(); });
+
 let lenis = null;
 if (!reduce && typeof Lenis !== 'undefined') {
   lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
@@ -110,6 +128,24 @@ function boot() {
   let dirty = true;
   const invalidate = () => { dirty = true; };
 
+  /* If the model never arrives — a dropped connection, a stalled CDN — the
+     loader must not sit there forever with the page behind it unusable.
+     Fall back to the same readable layout used when there is no WebGL. */
+  let settled = false;
+  function degrade() {
+    if (settled) return; settled = true;
+    clearTimeout(stall);
+    document.body.classList.add('no-webgl');
+    loader.classList.add('done');
+    setTimeout(() => { if (loader.isConnected) loader.remove(); }, 600);
+    const spec = $('#spec'), hint = $('#hint');
+    if (spec) { spec.style.opacity = 1; spec.classList.add('on'); }
+    $$('#spec li').forEach((li) => { li.classList.add('in'); li.style.opacity = 1; });
+    if (hint) hint.style.display = 'none';
+    ScrollTrigger.refresh();
+  }
+  const stall = setTimeout(degrade, 25000);
+
   /* ----- load ----- */
   const bar = $('#loadbar');
   const gltf = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
@@ -166,11 +202,18 @@ function boot() {
       parts.push({ mesh: o, base: o.position.clone(), off, edges, mats, name: (o.name || '').toLowerCase() });
     });
 
+    clearTimeout(stall);
+    if (settled) return;               // already degraded; don't fight the fallback
+    settled = true;
     loader.classList.add('done');
-    setTimeout(() => loader.remove(), 700);
+    setTimeout(() => { if (loader.isConnected) loader.remove(); }, 700);
     build();
     invalidate();
-  }, (e) => { if (e.total) bar.style.width = Math.round((e.loaded / e.total) * 100) + '%'; });
+    // The pin spacer changes the document height, so every measurement taken
+    // before this point is stale. Refresh once the layout has settled.
+    requestAnimationFrame(() => { ScrollTrigger.refresh(); invalidate(); });
+  }, (e) => { if (e.total) bar.style.width = Math.round((e.loaded / e.total) * 100) + '%'; },
+     () => degrade());
 
   /* ----- camera ----- */
   const target = new THREE.Vector3(0, 0, 0);
@@ -230,11 +273,16 @@ function boot() {
   }
   frame();
 
+  let rz = 0;
   addEventListener('resize', () => {
     renderer.setSize(innerWidth, innerHeight, false);
     camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
     renderer.setPixelRatio(Math.min(devicePixelRatio, coarse ? 1.5 : 2));
     invalidate();
+    // Mobile browser chrome sliding in and out changes innerHeight, which moves
+    // the pin's end point. Re-measure once the resize has stopped.
+    clearTimeout(rz);
+    rz = setTimeout(() => { ScrollTrigger.refresh(); invalidate(); }, 200);
   }, { passive: true });
 
   /* ----- the scroll story ----- */

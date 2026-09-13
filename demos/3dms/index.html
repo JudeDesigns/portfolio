@@ -12,6 +12,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="styles.css">
+<!-- Set before anything else: the browser decides whether to restore a scroll
+     position very early, and this page's pinned timeline cannot survive landing
+     mid-story with measurements taken from a different layout. -->
+<script>if('scrollRestoration' in history)history.scrollRestoration='manual';</script>
 <script type="importmap">{"imports":{"three":"./vendor/three/three.module.js","three/addons/":"./vendor/three/addons/"}}</script>
 </head>
 <body>
@@ -115,6 +119,28 @@
   </div>
 </section>
 
+<!-- ======== CHARACTER ======== -->
+<section class="block" id="character">
+  <div class="wrap char-grid">
+    <div class="char-copy">
+      <h2>He knows you're there.</h2>
+      <p class="lede">A rig is not a pose. He watches your pointer. Press him and he reaches for it, misses, and goes back to waiting.</p>
+      <ul class="char-facts">
+        <li><b>Skeleton</b><span>43 bones, 2 skinned meshes</span></li>
+        <li><b>Clips</b><span>14 baked clips, blended at runtime</span></li>
+        <li><b>Expressions</b><span>3 morph targets on the head mesh</span></li>
+        <li><b>Weight</b><span>453 KB, rig and clips included</span></li>
+      </ul>
+      <p class="char-note">Head tracking and the reach are driven by your pointer, not baked into the clip. The same rig runs in a game engine, a product configurator, or an explainer.</p>
+    </div>
+    <div class="char-stage">
+      <canvas id="charcanvas" aria-hidden="true"></canvas>
+      <div class="char-hint" id="charhint"><span>Move your cursor · click him</span></div>
+      <p class="char-credit">Model: <em>Robot Expressive</em> by Tomás Laulhé, CC0. Rig modified by Don McCurdy.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ======== FORMATS ======== -->
 <section class="block" id="formats">
   <div class="wrap">
@@ -166,5 +192,6 @@
 <script src="vendor/lenis.min.js"></script>
 <script type="module" src="vendor/model-viewer.min.js"></script>
 <script type="module" src="app.js"></script>
+<script type="module" src="char.js"></script>
 </body>
 </html>
