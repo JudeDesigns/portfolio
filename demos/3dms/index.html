@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>3D Modeling Service — concept</title>
+<meta name="description" content="A concept homepage for 3D Modeling Service: real-time 3D, exploded assemblies and touchable portfolio pieces. Built by Jude Oba.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0A0C12">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230A0C12'/%3E%3Crect x='18' y='18' width='28' height='28' rx='4' fill='none' stroke='%237A95FF' stroke-width='4' transform='rotate(45 32 32)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script type="importmap">{"imports":{"three":"./vendor/three/three.module.js","three/addons/":"./vendor/three/addons/"}}</script>
+</head>
+<body>
+
+<div id="loader"><div><div class="bar"><i id="loadbar"></i></div><span>Preparing assembly</span></div></div>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div id="poster" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a class="mark" href="#top"><i></i>3D Modeling Service</a>
+  <ul>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#formats">Formats</a></li>
+    <li><a href="#quote">Quote</a></li>
+  </ul>
+  <span class="concept"><span>Concept · not the live site</span></span>
+</header>
+
+<main id="top">
+
+<!-- ======== PINNED STAGE: hero → exploded view ======== -->
+<section id="stage" aria-label="Introduction">
+  <div class="panel">
+    <div class="hero" id="hero">
+      <span class="mono">3D modeling · CAD · Visualization · Real-time</span>
+      <h1>Built for how<br>it's <em>used.</em></h1>
+      <p>Models accurate enough for the factory, clean enough for the game engine, and detailed enough to sell a building before it exists.</p>
+      <div class="cta">
+        <a class="btn primary" href="#quote">Get a quote</a>
+        <a class="btn" href="#work">See the work</a>
+      </div>
+    </div>
+    <div class="hint" id="hint"><span>Scroll to open the assembly</span><i></i></div>
+  </div>
+
+  <div class="progress" id="progress"><i></i><i></i><i></i><i></i><i></i></div>
+
+  <aside class="spec" id="spec" aria-label="What we deliver">
+    <h2>One model. Every use.</h2>
+    <p class="sub">Hover a line to isolate the part.</p>
+    <ol>
+      <li data-part="body"><span class="n">01</span><div><b>Manufacturable frame</b><small>Wall thickness and fits a factory can hold.</small></div><span class="f">STEP · Parasolid</span></li>
+      <li data-part="fabric"><span class="n">02</span><div><b>Authored materials</b><small>Paint, fabric and weave, not flat colour.</small></div><span class="f">Blender · 3ds Max</span></li>
+      <li data-part="metal"><span class="n">03</span><div><b>Hardware and fasteners</b><small>Modelled, not faked with a texture.</small></div><span class="f">SolidWorks · Fusion</span></li>
+      <li data-part="label"><span class="n">04</span><div><b>Separable assembly</b><small>Every part its own object, down to the label.</small></div><span class="f">DWG · PDF</span></li>
+      <li data-part="all"><span class="n">05</span><div><b>Web and AR ready</b><small>This page is the proof — one file, under 2 MB.</small></div><span class="f">GLB · USDZ</span></li>
+    </ol>
+  </aside>
+</section>
+
+<div class="after">
+
+<!-- ======== PORTFOLIO ======== -->
+<section class="block" id="work">
+  <div class="wrap">
+    <div class="head">
+      <h2>Work you can turn around.</h2>
+      <p>Every piece ships in the format it will be used in. Drag to rotate; on a phone, open it in your room.</p>
+    </div>
+    <div class="filters" id="filters" role="group" aria-label="Filter">
+      <button aria-pressed="true" data-f="all">All</button>
+      <button aria-pressed="false" data-f="product">Product</button>
+      <button aria-pressed="false" data-f="interior">Interior</button>
+      <button aria-pressed="false" data-f="industrial">Industrial</button>
+    </div>
+    <div class="grid" id="grid">
+      <article class="card" data-cat="product" style="--vt:c1">
+        <model-viewer src="models/toycar.glb" alt="Toy car" camera-controls interaction-prompt="none" environment-image="neutral" tone-mapping="neutral" shadow-intensity="1" exposure="1" camera-orbit="35deg 70deg 105%" interpolation-decay="220" loading="lazy" ar ar-modes="webxr scene-viewer quick-look"></model-viewer>
+        <div class="meta"><div><b>Toy car</b><span>Product · clearcoat, glass</span></div><div class="fmts"><i>GLB</i><i>STEP</i></div></div>
+      </article>
+      <article class="card" data-cat="industrial" style="--vt:c2">
+        <model-viewer src="models/boombox.glb" alt="Portable speaker" camera-controls interaction-prompt="none" environment-image="neutral" tone-mapping="neutral" shadow-intensity="1" exposure="1" camera-orbit="-30deg 78deg 105%" interpolation-decay="220" loading="lazy" ar ar-modes="webxr scene-viewer quick-look"></model-viewer>
+        <div class="meta"><div><b>Portable speaker</b><span>Industrial · enclosure</span></div><div class="fmts"><i>GLB</i><i>IGES</i></div></div>
+      </article>
+      <article class="card" data-cat="interior" style="--vt:c3">
+        <model-viewer src="models/sheenchair.glb" alt="Chair" camera-controls interaction-prompt="none" environment-image="neutral" tone-mapping="neutral" shadow-intensity="1" exposure="1" camera-orbit="30deg 75deg 105%" interpolation-decay="220" loading="lazy" ar ar-modes="webxr scene-viewer quick-look"></model-viewer>
+        <div class="meta"><div><b>Lounge chair</b><span>Interior · fabric, wood</span></div><div class="fmts"><i>GLB</i><i>FBX</i></div></div>
+      </article>
+      <article class="card" data-cat="product" style="--vt:c4">
+        <model-viewer src="models/iridescencelamp.glb" alt="Lamp" camera-controls interaction-prompt="none" environment-image="neutral" tone-mapping="neutral" shadow-intensity="1" exposure="1" camera-orbit="20deg 70deg 105%" interpolation-decay="220" loading="lazy" ar ar-modes="webxr scene-viewer quick-look"></model-viewer>
+        <div class="meta"><div><b>Table lamp</b><span>Product · iridescent glass</span></div><div class="fmts"><i>GLB</i><i>OBJ</i></div></div>
+      </article>
+      <article class="card" data-cat="interior" style="--vt:c5">
+        <model-viewer src="models/glamvelvetsofa.glb" alt="Sofa" camera-controls interaction-prompt="none" environment-image="neutral" tone-mapping="neutral" shadow-intensity="1" exposure="1" camera-orbit="25deg 72deg 105%" interpolation-decay="220" loading="lazy" ar ar-modes="webxr scene-viewer quick-look"></model-viewer>
+        <div class="meta"><div><b>Velvet sofa</b><span>Interior · material variants</span></div><div class="fmts"><i>GLB</i><i>3DS</i></div></div>
+      </article>
+      <article class="card" data-cat="industrial" style="--vt:c6">
+        <model-viewer src="models/lantern.glb" alt="Lantern" camera-controls interaction-prompt="none" environment-image="neutral" tone-mapping="neutral" shadow-intensity="1" exposure="1" camera-orbit="40deg 72deg 105%" interpolation-decay="220" loading="lazy" ar ar-modes="webxr scene-viewer quick-look"></model-viewer>
+        <div class="meta"><div><b>Street lantern</b><span>Architectural · fixture</span></div><div class="fmts"><i>GLB</i><i>IFC</i></div></div>
+      </article>
+      <article class="card" data-cat="product" style="--vt:c7">
+        <model-viewer src="models/waterbottle.glb" alt="Water bottle" camera-controls interaction-prompt="none" environment-image="neutral" tone-mapping="neutral" shadow-intensity="1" exposure="1" camera-orbit="15deg 72deg 105%" interpolation-decay="220" loading="lazy" ar ar-modes="webxr scene-viewer quick-look"></model-viewer>
+        <div class="meta"><div><b>Insulated bottle</b><span>Product · brushed metal</span></div><div class="fmts"><i>GLB</i><i>STL</i></div></div>
+      </article>
+      <article class="card" data-cat="product" style="--vt:c8">
+        <model-viewer src="models/avocado.glb" alt="Scanned produce" camera-controls interaction-prompt="none" environment-image="neutral" tone-mapping="neutral" shadow-intensity="1" exposure="1" camera-orbit="25deg 70deg 105%" interpolation-decay="220" loading="lazy" ar ar-modes="webxr scene-viewer quick-look"></model-viewer>
+        <div class="meta"><div><b>Scanned produce</b><span>Product · photogrammetry</span></div><div class="fmts"><i>GLB</i><i>OBJ</i></div></div>
+      </article>
+    </div>
+    <p class="tip">Sample assets stand in for client work. Yours would sit here in the same viewers.</p>
+  </div>
+</section>
+
+<!-- ======== FORMATS ======== -->
+<section class="block" id="formats">
+  <div class="wrap">
+    <div class="head">
+      <h2>Delivered in your format.</h2>
+      <p>No conversions on your side. Say which tool opens it, and that is what arrives.</p>
+    </div>
+    <div class="formats">
+      <div><h3>CAD</h3><div class="chips"><span class="chip">STEP</span><span class="chip">IGES</span><span class="chip">Parasolid</span><span class="chip">SolidWorks</span><span class="chip">Fusion 360</span><span class="chip">DWG / DXF</span></div></div>
+      <div><h3>Exchange</h3><div class="chips"><span class="chip">FBX</span><span class="chip">OBJ</span><span class="chip">STL</span><span class="chip">3DS</span><span class="chip">Blender</span></div></div>
+      <div><h3>Real-time &amp; web</h3><div class="chips"><span class="chip">glTF / GLB</span><span class="chip">USDZ</span><span class="chip">Unity</span><span class="chip">Unreal</span></div></div>
+      <div><h3>BIM</h3><div class="chips"><span class="chip">IFC</span><span class="chip">Revit</span><span class="chip">ArchiCAD</span></div></div>
+    </div>
+    <div class="pipeline" id="pipeline">
+      <div><b>Brief</b><span>Sketch, photo or drawing</span></div>
+      <div><b>Model</b><span>Reviewed with you at each pass</span></div>
+      <div><b>Visualize</b><span>Renders, animation, AR</span></div>
+      <div><b>Deliver</b><span>Native files, ready to use</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== QUOTE ======== -->
+<section class="block cta-block" id="quote">
+  <div class="wrap">
+    <div>
+      <h2>Send us the sketch.</h2>
+      <p>A photo, a napkin drawing or a full spec. We reply with a plan and a price within one working day.</p>
+    </div>
+    <form onsubmit="event.preventDefault();this.querySelector('button').textContent='Sent (concept)';">
+      <div><label for="f-name">Name</label><input id="f-name" type="text" autocomplete="name"></div>
+      <div><label for="f-email">Email</label><input id="f-email" type="email" autocomplete="email"></div>
+      <div><label for="f-brief">What are we building?</label><textarea id="f-brief" rows="3"></textarea></div>
+      <button class="btn primary" type="submit">Request a quote</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span>Concept by <a href="https://judedesigns.github.io/portfolio">Jude Oba</a> for 3D Modeling Service · Sept 2026</span>
+  <span>Sample models: Khronos glTF sample assets (CC0; Wayfair &amp; DGG, CC-BY 4.0)</span>
+</footer>
+
+</div>
+</main>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script type="module" src="vendor/model-viewer.min.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
