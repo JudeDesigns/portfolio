@@ -255,10 +255,10 @@ section.chapter{padding-block:clamp(90px,14vh,170px)}
 /* ---------- about ---------- */
 .about .grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px 80px;align-items:center}
 .about .photo{position:relative;aspect-ratio:4/5;border-radius:18px;overflow:hidden;background:var(--surface);border:1px solid var(--line-2);box-shadow:0 40px 80px -40px rgba(139,108,255,.35)}
-.about .photo img{width:100%;height:100%;object-fit:cover}
+.about .photo img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:grayscale(1) contrast(1.06) brightness(.9)}
 .about .photo .ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:30px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:radial-gradient(circle at 30% 20%,rgba(139,108,255,.22),transparent 55%),linear-gradient(160deg,var(--surface-2),#0F1319)}
 .about .photo .ph b{display:block;font-family:var(--serif);font-size:120px;color:var(--accent-2);opacity:.6;text-transform:none;letter-spacing:-.04em;line-height:1;margin-bottom:12px;font-weight:400}
-.about .photo::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(196,186,255,.07);pointer-events:none}
+.about .photo::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(196,186,255,.07);background:linear-gradient(155deg,rgba(139,108,255,.16),transparent 46%),linear-gradient(0deg,rgba(5,5,7,.6),transparent 40%);pointer-events:none}
 .about .bio p+p{margin-top:16px}
 .about .bio{color:var(--ink-2)}
 .about .facts{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;padding-top:24px;border-top:1px solid var(--line)}
