@@ -76,6 +76,18 @@ const canvas = $('#gl');
 const loader = $('#loader');
 let gl = null;
 try { gl = canvas.getContext('webgl2', { antialias: true, alpha: true, powerPreference: 'high-performance' }); } catch (_) {}
+// A browser that is juggling several WebGL contexts on one page will reclaim
+// the oldest one. Three.js already blocks the default so the context can come
+// back; what it cannot know is that this renderer only draws when marked dirty,
+// so without this the chair simply never reappears after a restore.
+canvas.addEventListener('webglcontextlost', () => {
+  document.body.classList.add('gl-lost');
+}, false);
+canvas.addEventListener('webglcontextrestored', () => {
+  document.body.classList.remove('gl-lost');
+  window.dispatchEvent(new Event('gl-redraw'));
+}, false);
+
 if (!gl) {
   document.body.classList.add('no-webgl');
   loader.classList.add('done');
@@ -274,6 +286,8 @@ function boot() {
   frame();
 
   let rz = 0;
+  addEventListener('gl-redraw', () => { ScrollTrigger.refresh(); invalidate(); });
+
   addEventListener('resize', () => {
     renderer.setSize(innerWidth, innerHeight, false);
     camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();

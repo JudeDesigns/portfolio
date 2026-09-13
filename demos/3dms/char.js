@@ -1,6 +1,13 @@
 /* Rigged character panel.
    Idle loop from the clip, head tracking driven by the pointer (not baked),
-   and a reach on click. Own renderer, paused whenever the panel is off screen. */
+   and a reach on click.
+
+   The renderer is built the first time the panel comes near the viewport, not
+   at page load. This page already runs a WebGL context for the hero and one
+   more for the portfolio viewers, and a browser that is asked for too many at
+   once reclaims the oldest — which is the hero, whose chair then silently
+   disappears. Holding this context back until it is needed keeps the count
+   down for everyone who never scrolls this far. */
 
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -9,19 +16,34 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 const canvas = document.querySelector('#charcanvas');
 const stage = document.querySelector('.char-stage');
 const hint = document.querySelector('#charhint');
-if (canvas && stage) start();
 
-function start() {
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const coarse = matchMedia('(pointer: coarse)').matches;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const coarse = matchMedia('(pointer: coarse)').matches;
 
-  let gl = null;
-  try { gl = canvas.getContext('webgl2', { antialias: true, alpha: true }); } catch (_) {}
-  if (!gl) { stage.style.display = 'none'; return; }
+let visible = false, started = false, ctx = null;
 
+if (canvas && stage) {
   // There is no cursor to follow on a touch screen, so ask for the thing that
   // does work there rather than for something the device cannot do.
   if (coarse && hint) hint.firstElementChild.textContent = 'Tap him';
+
+  new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      visible = e.isIntersecting;
+      if (!visible) return;
+      if (!started) { started = true; ctx = init(); }
+      if (ctx) ctx.resume();
+    });
+  }, { rootMargin: '200px 0px', threshold: 0.01 }).observe(stage);
+}
+
+function init() {
+  let gl = null;
+  try { gl = canvas.getContext('webgl2', { antialias: true, alpha: true, powerPreference: 'low-power' }); } catch (_) {}
+  if (!gl) { stage.style.display = 'none'; return null; }
+
+  canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); stage.classList.add('lost'); }, false);
+  canvas.addEventListener('webglcontextrestored', () => { stage.classList.remove('lost'); clock.getDelta(); loop(); }, false);
 
   const renderer = new THREE.WebGLRenderer({ canvas, context: gl, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, coarse ? 1.5 : 2));
@@ -32,9 +54,10 @@ function start() {
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.05).texture;
+  pmrem.dispose();
 
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 60);
-  camera.position.set(0, 0.35, 6.3);
+  camera.position.set(0, 0.3, 5.9);
   camera.lookAt(0, 0.05, 0);
 
   const key = new THREE.DirectionalLight(0xffffff, 1.5);
@@ -60,33 +83,40 @@ function start() {
     ptr.inside = true;
     if (hint) hint.classList.add('gone');
   }, { passive: true });
-  stage.addEventListener('pointerleave', () => { ptr.inside = false; ptr.tx = 0; ptr.ty = 0; }, { passive: true });
+  stage.addEventListener('pointerleave', () => { ptr.inside = false; }, { passive: true });
 
   /* ---- model ---- */
-  let mixer = null, head = null, rig = null, actions = {}, current = null, headMesh = null;
-  let reaching = 0;                      // 1 while the reach clip owns the head
+  let mixer = null, head = null, rig = null, headMesh = null;
+  let actions = {}, current = null, reaching = 0, running = false;
   const clock = new THREE.Clock();
 
   new GLTFLoader().load('models/robot.glb', (res) => {
     rig = res.scene;
     // Normalise rather than trusting the asset's own units, so swapping the
     // character for a client's own model needs no hand-tuned numbers.
-    const box = new THREE.Box3().setFromObject(rig);
-    const size = box.getSize(new THREE.Vector3());
+    const size = new THREE.Box3().setFromObject(rig).getSize(new THREE.Vector3());
     rig.scale.setScalar(2.5 / (size.y || 1));
-    const box2 = new THREE.Box3().setFromObject(rig);
-    rig.position.y -= box2.min.y + 1.25;          // stand him on the floor plane
-    rig.position.x -= (box2.max.x + box2.min.x) / 2;
+    const b2 = new THREE.Box3().setFromObject(rig);
+    rig.position.y -= b2.min.y + 1.25;               // stand him on the floor plane
+    rig.position.x -= (b2.max.x + b2.min.x) / 2;
     scene.add(rig);
 
+    // This model names a bone AND a mesh "Head", so the loader has to rename one
+    // of them and matching on the name is a coin toss. Picking the mesh means
+    // the animation never rewrites what we rotate, the offset accumulates every
+    // frame, and the head spins. Take the bone from the skeleton, and find the
+    // face by the morph target it carries.
     rig.traverse((o) => {
-      if (o.isMesh) { o.frustumCulled = false; if (o.name === 'Head') headMesh = o; }
-      if (o.isBone && o.name === 'Head') head = o;
+      if (o.isMesh) o.frustumCulled = false;
+      if (o.isSkinnedMesh && !head) {
+        const bone = o.skeleton.bones.find((x) => /^head/i.test(x.name));
+        if (bone) head = bone;
+      }
+      if (o.morphTargetDictionary && 'Surprised' in o.morphTargetDictionary) headMesh = o;
     });
 
     mixer = new THREE.AnimationMixer(rig);
     res.animations.forEach((clip) => { actions[clip.name] = mixer.clipAction(clip); });
-
     ['Jump', 'Punch', 'ThumbsUp', 'Wave', 'Yes', 'No'].forEach((n) => {
       const a = actions[n];
       if (a) { a.setLoop(THREE.LoopOnce); a.clampWhenFinished = true; }
@@ -95,7 +125,7 @@ function start() {
     play('Idle');
     mixer.addEventListener('finished', () => { reaching = 0; play('Idle', 0.35); });
     if (reduce) { renderer.render(scene, camera); return; }
-    if (visible) loop();
+    if (visible) { clock.getDelta(); loop(); }
   }, undefined, () => { stage.style.display = 'none'; });
 
   function play(name, fade = 0.3, restart = false) {
@@ -112,57 +142,49 @@ function start() {
     current = next;
   }
 
-  /* ---- the reach: he lunges at the cursor, misses, resets ---- */
-  const reachClips = ['Punch', 'Wave', 'ThumbsUp'];
+  /* ---- the reach: he lunges at the pointer, misses, resets ---- */
   let lastReach = 0;
   stage.addEventListener('pointerdown', () => {
     if (!mixer || reduce) return;
     const now = performance.now();
-    if (now - lastReach < 450) return;          // no animation stacking on fast clicks
+    if (now - lastReach < 450) return;             // no stacking on fast clicks
     lastReach = now;
     reaching = 1;
-    // mostly the lunge; occasionally he waves or approves instead, so repeat
-    // clicking doesn't feel like a single canned response
-    const pick = Math.random() < 0.72 ? 'Punch' : reachClips[1 + Math.floor(Math.random() * 2)];
-    play(pick, 0.12, true);                      // restart even if it is the same clip
+    // mostly the lunge; sometimes a wave or a thumbs-up, so repeat presses
+    // don't feel like one canned response
+    const r = Math.random();
+    play(r < 0.72 ? 'Punch' : r < 0.88 ? 'Wave' : 'ThumbsUp', 0.12, true);
     if (headMesh && headMesh.morphTargetInfluences) surprise();
   });
 
   function surprise() {
     const infl = headMesh.morphTargetInfluences;
-    const dict = headMesh.morphTargetDictionary || {};
-    const i = dict.Surprised ?? 1;
+    const i = (headMesh.morphTargetDictionary || {}).Surprised ?? 1;
     const t0 = performance.now();
     const tick = () => {
       const k = (performance.now() - t0) / 620;
       if (k >= 1) { infl[i] = 0; return; }
-      infl[i] = Math.sin(k * Math.PI);          // in and back out
+      infl[i] = Math.sin(k * Math.PI);              // in and back out
       requestAnimationFrame(tick);
     };
     tick();
   }
 
-  /* ---- head tracking, applied after the clip has written the bones ---- */
+  /* ---- head tracking, composed onto the pose the clip just wrote ---- */
   const MAX_YAW = 0.46, MAX_PITCH = 0.26;
+  const offE = new THREE.Euler(0, 0, 0, 'YXZ');
+  const offQ = new THREE.Quaternion();
   function trackHead() {
     if (!head) return;
-    const w = reaching ? 0.25 : 1;              // the clip leads during the reach
-    head.rotation.y += ptr.x * MAX_YAW * w;
-    head.rotation.x += -ptr.y * MAX_PITCH * w;
-    if (rig) rig.rotation.y += (ptr.x * 0.34 - rig.rotation.y) * 0.08;  // body follows, lazily
+    const w = reaching ? 0.25 : 1;                  // the clip leads during the reach
+    offE.set(-ptr.y * MAX_PITCH * w, ptr.x * MAX_YAW * w, 0, 'YXZ');
+    offQ.setFromEuler(offE);
+    head.quaternion.multiply(offQ);
+    if (rig) rig.rotation.y += (ptr.x * 0.34 - rig.rotation.y) * 0.08;
   }
 
-  /* ---- render only while the panel is on screen ---- */
-  let visible = false, running = false;
-  new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      visible = e.isIntersecting;
-      if (visible && mixer && !running && !reduce) { clock.getDelta(); loop(); }
-    });
-  }, { threshold: 0.05 }).observe(stage);
-
   function loop() {
-    if (!visible) { running = false; return; }
+    if (!visible || !mixer) { running = false; return; }
     running = true;
     requestAnimationFrame(loop);
     // Before anyone has engaged — and on touch, where there is no cursor at
@@ -178,8 +200,10 @@ function start() {
     // slow GPU hands back a delta of whole seconds, and an unclamped mixer
     // swallows a one-second clip in a single frame — the reach fires and is
     // over before anything has been drawn.
-    if (mixer) mixer.update(Math.min(clock.getDelta(), 0.05));
+    mixer.update(Math.min(clock.getDelta(), 0.05));
     trackHead();
     renderer.render(scene, camera);
   }
+
+  return { resume() { if (!running && mixer && !reduce) { clock.getDelta(); loop(); } }, resize };
 }
