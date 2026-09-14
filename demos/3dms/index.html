@@ -7,11 +7,11 @@
 <meta name="description" content="A concept homepage for 3D Modeling Service: real-time 3D, exploded assemblies and touchable portfolio pieces. Built by Jude Oba.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#0A0C12">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230A0C12'/%3E%3Crect x='18' y='18' width='28' height='28' rx='4' fill='none' stroke='%237A95FF' stroke-width='4' transform='rotate(45 32 32)'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230A0C12'/%3E%3Cg fill='none' stroke='%237A95FF' stroke-width='3.5' stroke-linejoin='round'%3E%3Cpath d='M8 22 L24 26 L24 38 L8 42 Z'/%3E%3Ccircle cx='44' cy='32' r='12'/%3E%3Ccircle cx='44' cy='32' r='5'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="styles.css?v=3">
 <!-- Set before anything else: the browser decides whether to restore a scroll
      position very early, and this page's pinned timeline cannot survive landing
      mid-story with measurements taken from a different layout. -->
@@ -25,13 +25,26 @@
 <div id="poster" aria-hidden="true"></div>
 
 <header class="nav" id="nav">
-  <a class="mark" href="#top"><i></i>3D Modeling Service</a>
-  <ul>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#formats">Formats</a></li>
-    <li><a href="#quote">Quote</a></li>
-  </ul>
-  <span class="concept"><span>Concept · not the live site</span></span>
+  <a class="mark" href="#top">
+    <!-- third-angle projection symbol: the mark every engineering drawing
+         carries, and the one thing on this page a CAD buyer reads instantly -->
+    <svg class="proj" viewBox="0 0 46 22" aria-hidden="true" focusable="false">
+      <path d="M3 5.5 L15 8.2 L15 13.8 L3 16.5 Z"/>
+      <circle cx="32" cy="11" r="8.2"/>
+      <circle cx="32" cy="11" r="3.4"/>
+      <path class="cl" d="M0 11 H46"/>
+    </svg>
+    <span class="wordmark">
+      <b>3D Modeling Service</b>
+      <i>Concept sheet · not the live site</i>
+    </span>
+  </a>
+  <nav class="cells" aria-label="Sections">
+    <a href="#work"><i>01</i><span>Work</span></a>
+    <a href="#character"><i>02</i><span>Rigs</span></a>
+    <a href="#formats"><i>03</i><span>Formats</span></a>
+    <a href="#quote" class="go"><i>04</i><span>Quote</span></a>
+  </nav>
 </header>
 
 <main id="top">
@@ -123,21 +136,21 @@
 <section class="block" id="character">
   <div class="wrap char-grid">
     <div class="char-copy">
-      <h2>He knows you're there.</h2>
-      <p class="lede">A rig is not a pose. He watches your pointer. Press him and he reaches for it, misses, and goes back to waiting.</p>
+      <h2>She knows you're there.</h2>
+      <p class="lede">A rig is not a pose. She watches your pointer. Press, and her arm is aimed at it by a solver, not by a clip — she reaches, misses, and goes back to waiting.</p>
       <ul class="char-facts">
-        <li><b>Skeleton</b><span>43 bones, 2 skinned meshes</span></li>
-        <li><b>Clips</b><span>14 baked clips, blended at runtime</span></li>
-        <li><b>Expressions</b><span>3 morph targets on the head mesh</span></li>
-        <li><b>Weight</b><span>453 KB, rig and clips included</span></li>
+        <li><b>Skeleton</b><span>67 joints, fingers included</span></li>
+        <li><b>Clips</b><span>One idle loop, blended with reactions</span></li>
+        <li><b>Solved live</b><span>Neck, head, spine and right arm</span></li>
+        <li><b>Weight</b><span>382 KB, rig and clips included</span></li>
       </ul>
-      <p class="char-note">Head tracking and the reach are driven by your pointer, not baked into the clip. The same rig runs in a game engine, a product configurator, or an explainer.</p>
+      <p class="char-note">The idle is the only animation playing. Everything that responds to you is solved per frame against the same skeleton — which is what makes a rig worth building once and using everywhere.</p>
     </div>
     <div class="char-stage">
       <canvas id="charcanvas" aria-hidden="true"></canvas>
-      <div class="char-hint" id="charhint"><span>Move your cursor · click him</span></div>
+      <div class="char-hint" id="charhint"><span>Move your cursor · press her</span></div>
     </div>
-    <p class="char-credit">Model: <em>Robot Expressive</em> by Tomás Laulhé, CC0. Rig modified by Don McCurdy.</p>
+    <p class="char-credit">Figure: <em>Xbot</em>, a Mixamo sample rig, via the three.js examples.</p>
   </div>
 </section>
 
@@ -191,7 +204,7 @@
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
 <script type="module" src="vendor/model-viewer.min.js"></script>
-<script type="module" src="app.js?v=2"></script>
-<script type="module" src="char.js?v=2"></script>
+<script type="module" src="app.js?v=3"></script>
+<script type="module" src="char.js?v=3"></script>
 </body>
 </html>
